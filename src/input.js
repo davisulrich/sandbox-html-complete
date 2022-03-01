@@ -5,11 +5,23 @@ export default class InputHandler {
     document.addEventListener("keydown", (event) => {
       switch (event.keyCode) {
         case 37:
-          Paddle.moveLeft();
+          paddle.moveLeft();
           break;
 
         case 39:
-          alert("move right");
+          paddle.moveRight();
+          break;
+      }
+    });
+
+    document.addEventListener("keyup", (event) => {
+      switch (event.keyCode) {
+        case 37:
+          if (paddle.speed < 0) paddle.stop();
+          break;
+
+        case 39:
+          if (paddle.speed > 0) paddle.stop();
           break;
       }
     });
