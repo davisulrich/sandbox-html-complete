@@ -1,4 +1,6 @@
 import Paddle from "/src/paddle";
+import Input from "/src/input";
+import InputHandler from "./input";
 
 let canvas = document.getElementById("gameScreen");
 
@@ -8,6 +10,8 @@ const GAME_WIDTH = 800;
 const GAME_HEIGHT = 600;
 
 let paddle = new Paddle(GAME_WIDTH, GAME_HEIGHT);
+
+new InputHandler();
 
 paddle.draw(context);
 
