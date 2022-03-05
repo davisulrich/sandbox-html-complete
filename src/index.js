@@ -4,8 +4,8 @@ let canvas = document.getElementById("gameScreen");
 
 let context = canvas.getContext("2d");
 
-const GAME_WIDTH = 800;
-const GAME_HEIGHT = 600;
+const GAME_WIDTH = 400;
+const GAME_HEIGHT = 300;
 
 let game = new Game(GAME_WIDTH, GAME_HEIGHT);
 game.start();

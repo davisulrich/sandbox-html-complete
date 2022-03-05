@@ -3,7 +3,7 @@ export default class Ball {
     this.image = document.getElementById("img_icecream");
     this.position = { x: 10, y: 10 };
     this.speed = { x: 4, y: 4 };
-    this.size = { width: 35, height: 70 };
+    this.size = { width: 15, height: 30 };
 
     this.gameWidth = game.gameWidth;
     this.gameHeight = game.gameHeight;
@@ -25,26 +25,29 @@ export default class Ball {
     this.position.x += this.speed.x;
     this.position.y += this.speed.y;
 
-    //wall on left or right (x axis)
+    //hitting the wall on left or right (x axis)
     if (
       this.position.x + this.size.width > this.gameWidth ||
       this.position.x < 0
     )
       this.speed.x = -this.speed.x;
 
-    //wall on top or bottom (y axis))
+    //hitting the wall on top or bottom (y axis))
     if (
       this.position.y + this.size.height > this.gameHeight ||
       this.position.y < 0
     )
       this.speed.y = -this.speed.y;
 
-    let bottomOfBall = this.position.y + this.height;
+    //check for collision with the paddle
+    let bottomOfBall = this.position.y + this.size.height;
     let topOfPaddle = this.game.paddle.position.y;
+    let leftSideOfPaddle = this.game.paddle.position.x;
+    let rightSideOfPaddle = this.game.paddle.position.x + this.game.paddle.width;
 
-    if (bottomOfBall >= topOfPaddle) {
+    if (bottomOfBall >= topOfPaddle && this.position.x >= leftSideOfPaddle && this.position.x + this.size.width <= rightSideOfPaddle) {
       this.speed.y = -this.speed.y;
-      this.position.y = this.game.paddle.position.y - this.size;
+      this.position.y = this.game.paddle.position.y - this.size.height;
     }
   }
 }
