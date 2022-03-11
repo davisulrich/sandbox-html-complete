@@ -3,8 +3,8 @@ import {detectCollision} from "/src/collisionDetection"
 export default class Ball {
   constructor(game, paddle) {
     this.image = document.getElementById("img_icecream");
-    this.position = { x: 10, y: 10 };
-    this.speed = { x: 4, y: 4 };
+    this.position = { x: 10, y: 200 };
+    this.speed = { x: 2.3, y: -2.3 };
     this.size = { width: 15, height: 30 };
 
     this.gameWidth = game.gameWidth;
@@ -41,13 +41,7 @@ export default class Ball {
     )
       this.speed.y = -this.speed.y;
 
-    //check for collision with the paddle
-    let bottomOfBall = this.position.y + this.size.height;
-    let topOfPaddle = this.game.paddle.position.y;
-    let leftSideOfPaddle = this.game.paddle.position.x;
-    let rightSideOfPaddle = this.game.paddle.position.x + this.game.paddle.width;
-
-    if (bottomOfBall >= topOfPaddle && this.position.x >= leftSideOfPaddle && this.position.x + this.size.width <= rightSideOfPaddle) {
+    if (detectCollision(this, this.game.paddle)) {
       this.speed.y = -this.speed.y;
       this.position.y = this.game.paddle.position.y - this.size.height;
     }
