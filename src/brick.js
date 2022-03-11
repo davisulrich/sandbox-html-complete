@@ -1,6 +1,6 @@
 export default class Brick {
   constructor(game, position) {
-    this.image = document.getElementById("img_unicorn");
+    this.image = document.getElementById("img_sprinkles");
     this.position = position;
   
     this.width = 40;
@@ -9,9 +9,7 @@ export default class Brick {
     this.game = game;
   }
 
-  update() {
-
-  }
+  update() {}
 
   draw(context) {
     context.drawImage(this.image, this.position.x, this.position.y, this.width, this.height);

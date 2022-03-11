@@ -1,3 +1,5 @@
+import {detectCollision} from "/src/collisionDetection"
+
 export default class Ball {
   constructor(game, paddle) {
     this.image = document.getElementById("img_icecream");
