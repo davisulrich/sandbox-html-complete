@@ -8,7 +8,6 @@ const GAME_WIDTH = 400;
 const GAME_HEIGHT = 300;
 
 let game = new Game(GAME_WIDTH, GAME_HEIGHT);
-game.start();
 
 let lastTime = 0;
 
