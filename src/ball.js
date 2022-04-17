@@ -1,16 +1,20 @@
-import {detectCollision} from "/src/collisionDetection"
+import { detectCollision } from "/src/collisionDetection";
 
 export default class Ball {
   constructor(game, paddle) {
     this.image = document.getElementById("img_icecream");
-    this.position = { x: 10, y: 200 };
-    this.speed = { x: 2.3, y: -2.3 };
-    this.size = { width: 15, height: 30 };
 
     this.gameWidth = game.gameWidth;
     this.gameHeight = game.gameHeight;
 
     this.game = game;
+    this.size = { width: 15, height: 30 };
+    this.reset();
+  }
+
+  reset() {
+    this.position = { x: 10, y: 200 };
+    this.speed = { x: 2.3, y: -2.3 };
   }
 
   draw(context) {
@@ -34,12 +38,14 @@ export default class Ball {
     )
       this.speed.x = -this.speed.x;
 
-    //hitting the wall on top or bottom (y axis))
-    if (
-      this.position.y + this.size.height > this.gameHeight ||
-      this.position.y < 0
-    )
-      this.speed.y = -this.speed.y;
+    //hitting the wall on top (y axis))
+    if (this.position.y < 0) this.speed.y = -this.speed.y;
+
+    // hitting the bottom of the screen (game over)
+    if (this.position.y + this.size.height > this.gameHeight) {
+      this.game.lives--;
+      this.reset();
+    }
 
     if (detectCollision(this, this.game.paddle)) {
       this.speed.y = -this.speed.y;

@@ -12,7 +12,7 @@ let game = new Game(GAME_WIDTH, GAME_HEIGHT);
 let lastTime = 0;
 
 // images
-let imgIceCream = document.getElementById("img_icecream");
+// let imgIceCream = document.getElementById("img_icecream");
 
 function gameLoop(timestamp) {
   let deltaTime = timestamp - lastTime;
