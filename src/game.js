@@ -2,13 +2,14 @@ import Paddle from "/src/paddle";
 import InputHandler from "/src/input";
 import Ball from "/src/ball";
 import Brick from "/src/brick";
-import { buildLevel, level1 } from "/src/levels";
+import { buildLevel, level1, level2 } from "/src/levels";
 
 const GAME_STATE = {
   PAUSED: 0,
   RUNNING: 1,
   MENU: 2,
-  GAMEOVER: 3
+  GAMEOVER: 3,
+  NEWLEVEL: 4
 };
 export default class Game {
   constructor(gameWidth, gameHeight) {
@@ -20,13 +21,21 @@ export default class Game {
     this.gameObjects = [];
     this.lives = 3;
     this.bricks = [];
+    this.levels = [level1, level2];
+    this.currentLevel = 0;
+
     new InputHandler(this.paddle, this);
   }
 
   start() {
-    if (this.gamestate !== GAME_STATE.MENU) return;
+    if (
+      this.gamestate !== GAME_STATE.MENU &&
+      this.gamestate !== GAME_STATE.NEWLEVEL
+    )
+      return;
 
-    this.bricks = buildLevel(this, level1);
+    this.bricks = buildLevel(this, this.levels[this.currentLevel]);
+    this.ball.reset();
     this.gameObjects = [this.ball, this.paddle];
     this.gamestate = GAME_STATE.RUNNING;
   }
@@ -43,9 +52,13 @@ export default class Game {
     [...this.gameObjects, ...this.bricks].forEach((object) =>
       object.update(deltaTime)
     );
-    this.gameObjects = this.gameObjects.filter(
-      (object) => !object.markedForDeletion
-    );
+    this.bricks = this.bricks.filter((brick) => !brick.markedForDeletion);
+
+    if (this.bricks.length === 0) {
+      this.gamestate = GAME_STATE.NEWLEVEL;
+      this.currentLevel++;
+      this.start();
+    }
   }
 
   draw(context) {
